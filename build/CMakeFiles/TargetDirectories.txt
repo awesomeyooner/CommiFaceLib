@@ -1,0 +1,4 @@
+/home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles/CommiFaceLib.dir
+/home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles/Test.dir
+/home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles/edit_cache.dir
+/home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles/rebuild_cache.dir

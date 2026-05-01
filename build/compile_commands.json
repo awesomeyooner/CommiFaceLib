@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/home/aaron/Documents/GitHub/CommiFaceLib/build",
+  "command": "/usr/bin/cc  -I/home/aaron/Documents/GitHub/CommiFaceLib/include -I/home/aaron/Documents/GitHub/CommiFaceLib/lib  -o CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.o -c /home/aaron/Documents/GitHub/CommiFaceLib/lib/libi2c/src/i2c.c",
+  "file": "/home/aaron/Documents/GitHub/CommiFaceLib/lib/libi2c/src/i2c.c",
+  "output": "CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.o"
+},
+{
+  "directory": "/home/aaron/Documents/GitHub/CommiFaceLib/build",
+  "command": "/usr/bin/c++  -I/home/aaron/Documents/GitHub/CommiFaceLib/include -I/home/aaron/Documents/GitHub/CommiFaceLib/lib  -o CMakeFiles/Test.dir/test/test.cpp.o -c /home/aaron/Documents/GitHub/CommiFaceLib/test/test.cpp",
+  "file": "/home/aaron/Documents/GitHub/CommiFaceLib/test/test.cpp",
+  "output": "CMakeFiles/Test.dir/test/test.cpp.o"
+}
+]
