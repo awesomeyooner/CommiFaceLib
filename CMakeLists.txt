@@ -10,9 +10,13 @@ add_library(${PROJECT_NAME}
     # src/i2c/i2c.cpp
     # src/i2c/wire_device.cpp
 
+    src/util/byte_converter.cpp
+
     # libi2c
     lib/libi2c/src/i2c.c
 )
+
+add_subdirectory(lib/plib)
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC
@@ -27,7 +31,7 @@ target_include_directories(${PROJECT_NAME}
 
 # This is for this project specifically
 target_link_libraries(${PROJECT_NAME}
-    
+    plib
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)

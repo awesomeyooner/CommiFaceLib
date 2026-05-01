@@ -142,6 +142,19 @@ Test/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Test.dir/build.make CMakeFiles/Test.dir/build
 .PHONY : Test/fast
 
+#=============================================================================
+# Target rules for targets named plib
+
+# Build rule for target.
+plib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 plib
+.PHONY : plib
+
+# fast build rule for target.
+plib/fast:
+	$(MAKE) $(MAKESILENT) -f lib/plib/CMakeFiles/plib.dir/build.make lib/plib/CMakeFiles/plib.dir/build
+.PHONY : plib/fast
+
 lib/libi2c/src/i2c.o: lib/libi2c/src/i2c.c.o
 .PHONY : lib/libi2c/src/i2c.o
 
@@ -165,6 +178,30 @@ lib/libi2c/src/i2c.s: lib/libi2c/src/i2c.c.s
 lib/libi2c/src/i2c.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CommiFaceLib.dir/build.make CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.s
 .PHONY : lib/libi2c/src/i2c.c.s
+
+src/util/byte_converter.o: src/util/byte_converter.cpp.o
+.PHONY : src/util/byte_converter.o
+
+# target to build an object file
+src/util/byte_converter.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CommiFaceLib.dir/build.make CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.o
+.PHONY : src/util/byte_converter.cpp.o
+
+src/util/byte_converter.i: src/util/byte_converter.cpp.i
+.PHONY : src/util/byte_converter.i
+
+# target to preprocess a source file
+src/util/byte_converter.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CommiFaceLib.dir/build.make CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.i
+.PHONY : src/util/byte_converter.cpp.i
+
+src/util/byte_converter.s: src/util/byte_converter.cpp.s
+.PHONY : src/util/byte_converter.s
+
+# target to generate assembly for a file
+src/util/byte_converter.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CommiFaceLib.dir/build.make CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.s
+.PHONY : src/util/byte_converter.cpp.s
 
 test/test.o: test/test.cpp.o
 .PHONY : test/test.o
@@ -200,9 +237,13 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... CommiFaceLib"
 	@echo "... Test"
+	@echo "... plib"
 	@echo "... lib/libi2c/src/i2c.o"
 	@echo "... lib/libi2c/src/i2c.i"
 	@echo "... lib/libi2c/src/i2c.s"
+	@echo "... src/util/byte_converter.o"
+	@echo "... src/util/byte_converter.i"
+	@echo "... src/util/byte_converter.s"
 	@echo "... test/test.o"
 	@echo "... test/test.i"
 	@echo "... test/test.s"

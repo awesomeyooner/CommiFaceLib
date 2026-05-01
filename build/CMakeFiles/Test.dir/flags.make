@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/aaron/Documents/GitHub/CommiFaceLib/include -I/home/aaron/Documents/GitHub/CommiFaceLib/lib
+CXX_INCLUDES = -I/home/aaron/Documents/GitHub/CommiFaceLib/include -I/home/aaron/Documents/GitHub/CommiFaceLib/lib -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/include -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/lib
 
 CXX_FLAGS = 
 

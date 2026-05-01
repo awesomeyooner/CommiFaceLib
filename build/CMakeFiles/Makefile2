@@ -65,30 +65,47 @@ CMAKE_BINARY_DIR = /home/aaron/Documents/GitHub/CommiFaceLib/build
 # The main recursive "all" target.
 all: CMakeFiles/CommiFaceLib.dir/all
 all: CMakeFiles/Test.dir/all
+all: lib/plib/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall:
+preinstall: lib/plib/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
 clean: CMakeFiles/CommiFaceLib.dir/clean
 clean: CMakeFiles/Test.dir/clean
+clean: lib/plib/clean
 .PHONY : clean
+
+#=============================================================================
+# Directory level rules for directory lib/plib
+
+# Recursive "all" directory target.
+lib/plib/all: lib/plib/CMakeFiles/plib.dir/all
+.PHONY : lib/plib/all
+
+# Recursive "preinstall" directory target.
+lib/plib/preinstall:
+.PHONY : lib/plib/preinstall
+
+# Recursive "clean" directory target.
+lib/plib/clean: lib/plib/CMakeFiles/plib.dir/clean
+.PHONY : lib/plib/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/CommiFaceLib.dir
 
 # All Build rule for target.
-CMakeFiles/CommiFaceLib.dir/all:
+CMakeFiles/CommiFaceLib.dir/all: lib/plib/CMakeFiles/plib.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CommiFaceLib.dir/build.make CMakeFiles/CommiFaceLib.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CommiFaceLib.dir/build.make CMakeFiles/CommiFaceLib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles --progress-num=1,2 "Built target CommiFaceLib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles --progress-num=1,2,3 "Built target CommiFaceLib"
 .PHONY : CMakeFiles/CommiFaceLib.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/CommiFaceLib.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles 11
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/CommiFaceLib.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles 0
 .PHONY : CMakeFiles/CommiFaceLib.dir/rule
@@ -107,14 +124,15 @@ CMakeFiles/CommiFaceLib.dir/clean:
 
 # All Build rule for target.
 CMakeFiles/Test.dir/all: CMakeFiles/CommiFaceLib.dir/all
+CMakeFiles/Test.dir/all: lib/plib/CMakeFiles/plib.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Test.dir/build.make CMakeFiles/Test.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Test.dir/build.make CMakeFiles/Test.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles --progress-num=3,4 "Built target Test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles --progress-num=4,5 "Built target Test"
 .PHONY : CMakeFiles/Test.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Test.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles 13
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Test.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles 0
 .PHONY : CMakeFiles/Test.dir/rule
@@ -127,6 +145,32 @@ Test: CMakeFiles/Test.dir/rule
 CMakeFiles/Test.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Test.dir/build.make CMakeFiles/Test.dir/clean
 .PHONY : CMakeFiles/Test.dir/clean
+
+#=============================================================================
+# Target rules for target lib/plib/CMakeFiles/plib.dir
+
+# All Build rule for target.
+lib/plib/CMakeFiles/plib.dir/all:
+	$(MAKE) $(MAKESILENT) -f lib/plib/CMakeFiles/plib.dir/build.make lib/plib/CMakeFiles/plib.dir/depend
+	$(MAKE) $(MAKESILENT) -f lib/plib/CMakeFiles/plib.dir/build.make lib/plib/CMakeFiles/plib.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles --progress-num=6,7,8,9,10,11,12,13 "Built target plib"
+.PHONY : lib/plib/CMakeFiles/plib.dir/all
+
+# Build rule for subdir invocation for target.
+lib/plib/CMakeFiles/plib.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles 8
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/plib/CMakeFiles/plib.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles 0
+.PHONY : lib/plib/CMakeFiles/plib.dir/rule
+
+# Convenience name for target.
+plib: lib/plib/CMakeFiles/plib.dir/rule
+.PHONY : plib
+
+# clean rule for target.
+lib/plib/CMakeFiles/plib.dir/clean:
+	$(MAKE) $(MAKESILENT) -f lib/plib/CMakeFiles/plib.dir/build.make lib/plib/CMakeFiles/plib.dir/clean
+.PHONY : lib/plib/CMakeFiles/plib.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

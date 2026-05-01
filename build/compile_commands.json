@@ -1,14 +1,62 @@
 [
 {
   "directory": "/home/aaron/Documents/GitHub/CommiFaceLib/build",
-  "command": "/usr/bin/cc  -I/home/aaron/Documents/GitHub/CommiFaceLib/include -I/home/aaron/Documents/GitHub/CommiFaceLib/lib  -o CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.o -c /home/aaron/Documents/GitHub/CommiFaceLib/lib/libi2c/src/i2c.c",
+  "command": "/usr/bin/c++  -I/home/aaron/Documents/GitHub/CommiFaceLib/include -I/home/aaron/Documents/GitHub/CommiFaceLib/lib -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/include -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/lib  -o CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.o -c /home/aaron/Documents/GitHub/CommiFaceLib/src/util/byte_converter.cpp",
+  "file": "/home/aaron/Documents/GitHub/CommiFaceLib/src/util/byte_converter.cpp",
+  "output": "CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.o"
+},
+{
+  "directory": "/home/aaron/Documents/GitHub/CommiFaceLib/build",
+  "command": "/usr/bin/cc  -I/home/aaron/Documents/GitHub/CommiFaceLib/include -I/home/aaron/Documents/GitHub/CommiFaceLib/lib -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/include -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/lib  -o CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.o -c /home/aaron/Documents/GitHub/CommiFaceLib/lib/libi2c/src/i2c.c",
   "file": "/home/aaron/Documents/GitHub/CommiFaceLib/lib/libi2c/src/i2c.c",
   "output": "CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.o"
 },
 {
   "directory": "/home/aaron/Documents/GitHub/CommiFaceLib/build",
-  "command": "/usr/bin/c++  -I/home/aaron/Documents/GitHub/CommiFaceLib/include -I/home/aaron/Documents/GitHub/CommiFaceLib/lib  -o CMakeFiles/Test.dir/test/test.cpp.o -c /home/aaron/Documents/GitHub/CommiFaceLib/test/test.cpp",
+  "command": "/usr/bin/c++  -I/home/aaron/Documents/GitHub/CommiFaceLib/include -I/home/aaron/Documents/GitHub/CommiFaceLib/lib -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/include -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/lib  -o CMakeFiles/Test.dir/test/test.cpp.o -c /home/aaron/Documents/GitHub/CommiFaceLib/test/test.cpp",
   "file": "/home/aaron/Documents/GitHub/CommiFaceLib/test/test.cpp",
   "output": "CMakeFiles/Test.dir/test/test.cpp.o"
+},
+{
+  "directory": "/home/aaron/Documents/GitHub/CommiFaceLib/build/lib/plib",
+  "command": "/usr/bin/c++  -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/include -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/lib  -o CMakeFiles/plib.dir/src/util/logger.cpp.o -c /home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/src/util/logger.cpp",
+  "file": "/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/src/util/logger.cpp",
+  "output": "lib/plib/CMakeFiles/plib.dir/src/util/logger.cpp.o"
+},
+{
+  "directory": "/home/aaron/Documents/GitHub/CommiFaceLib/build/lib/plib",
+  "command": "/usr/bin/c++  -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/include -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/lib  -o CMakeFiles/plib.dir/src/util/status.cpp.o -c /home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/src/util/status.cpp",
+  "file": "/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/src/util/status.cpp",
+  "output": "lib/plib/CMakeFiles/plib.dir/src/util/status.cpp.o"
+},
+{
+  "directory": "/home/aaron/Documents/GitHub/CommiFaceLib/build/lib/plib",
+  "command": "/usr/bin/c++  -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/include -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/lib  -o CMakeFiles/plib.dir/src/util/gnu_plotter.cpp.o -c /home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/src/util/gnu_plotter.cpp",
+  "file": "/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/src/util/gnu_plotter.cpp",
+  "output": "lib/plib/CMakeFiles/plib.dir/src/util/gnu_plotter.cpp.o"
+},
+{
+  "directory": "/home/aaron/Documents/GitHub/CommiFaceLib/build/lib/plib",
+  "command": "/usr/bin/c++  -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/include -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/lib  -o CMakeFiles/plib.dir/src/util/util.cpp.o -c /home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/src/util/util.cpp",
+  "file": "/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/src/util/util.cpp",
+  "output": "lib/plib/CMakeFiles/plib.dir/src/util/util.cpp.o"
+},
+{
+  "directory": "/home/aaron/Documents/GitHub/CommiFaceLib/build/lib/plib",
+  "command": "/usr/bin/c++  -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/include -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/lib  -o CMakeFiles/plib.dir/src/util/system.cpp.o -c /home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/src/util/system.cpp",
+  "file": "/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/src/util/system.cpp",
+  "output": "lib/plib/CMakeFiles/plib.dir/src/util/system.cpp.o"
+},
+{
+  "directory": "/home/aaron/Documents/GitHub/CommiFaceLib/build/lib/plib",
+  "command": "/usr/bin/c++  -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/include -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/lib  -o CMakeFiles/plib.dir/src/math/motion/cubic_hermite_spline.cpp.o -c /home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/src/math/motion/cubic_hermite_spline.cpp",
+  "file": "/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/src/math/motion/cubic_hermite_spline.cpp",
+  "output": "lib/plib/CMakeFiles/plib.dir/src/math/motion/cubic_hermite_spline.cpp.o"
+},
+{
+  "directory": "/home/aaron/Documents/GitHub/CommiFaceLib/build/lib/plib",
+  "command": "/usr/bin/c++  -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/include -I/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/lib  -o CMakeFiles/plib.dir/src/math/control/pid_controller.cpp.o -c /home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/src/math/control/pid_controller.cpp",
+  "file": "/home/aaron/Documents/GitHub/CommiFaceLib/lib/plib/src/math/control/pid_controller.cpp",
+  "output": "lib/plib/CMakeFiles/plib.dir/src/math/control/pid_controller.cpp.o"
 }
 ]

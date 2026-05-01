@@ -1,1 +1,1 @@
-/usr/bin/c++ CMakeFiles/Test.dir/test/test.cpp.o -o Test  libCommiFaceLib.a 
+/usr/bin/c++ CMakeFiles/Test.dir/test/test.cpp.o -o Test  libCommiFaceLib.a lib/plib/libplib.a 

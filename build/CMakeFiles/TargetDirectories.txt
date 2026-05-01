@@ -2,3 +2,6 @@
 /home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles/Test.dir
 /home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles/edit_cache.dir
 /home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles/rebuild_cache.dir
+/home/aaron/Documents/GitHub/CommiFaceLib/build/lib/plib/CMakeFiles/plib.dir
+/home/aaron/Documents/GitHub/CommiFaceLib/build/lib/plib/CMakeFiles/edit_cache.dir
+/home/aaron/Documents/GitHub/CommiFaceLib/build/lib/plib/CMakeFiles/rebuild_cache.dir
