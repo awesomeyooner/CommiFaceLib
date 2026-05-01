@@ -1,3 +1,6 @@
 [submodule "lib/libi2c"]
 	path = lib/libi2c
 	url = https://github.com/amaork/libi2c.git
+[submodule "lib/plib"]
+	path = lib/plib
+	url = https://github.com/awesomeyooner/plib.git
