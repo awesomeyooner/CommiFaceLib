@@ -73,15 +73,15 @@ CMakeFiles/Test.dir/test/test.cpp.o: CMakeFiles/Test.dir/flags.make
 CMakeFiles/Test.dir/test/test.cpp.o: /home/aaron/Documents/GitHub/CommiFaceLib/test/test.cpp
 CMakeFiles/Test.dir/test/test.cpp.o: CMakeFiles/Test.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Test.dir/test/test.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Test.dir/test/test.cpp.o -MF CMakeFiles/Test.dir/test/test.cpp.o.d -o CMakeFiles/Test.dir/test/test.cpp.o -c /home/aaron/Documents/GitHub/CommiFaceLib/test/test.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Test.dir/test/test.cpp.o -MF CMakeFiles/Test.dir/test/test.cpp.o.d -o CMakeFiles/Test.dir/test/test.cpp.o -c /home/aaron/Documents/GitHub/CommiFaceLib/test/test.cpp
 
 CMakeFiles/Test.dir/test/test.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Test.dir/test/test.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/aaron/Documents/GitHub/CommiFaceLib/test/test.cpp > CMakeFiles/Test.dir/test/test.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/aaron/Documents/GitHub/CommiFaceLib/test/test.cpp > CMakeFiles/Test.dir/test/test.cpp.i
 
 CMakeFiles/Test.dir/test/test.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Test.dir/test/test.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aaron/Documents/GitHub/CommiFaceLib/test/test.cpp -o CMakeFiles/Test.dir/test/test.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aaron/Documents/GitHub/CommiFaceLib/test/test.cpp -o CMakeFiles/Test.dir/test/test.cpp.s
 
 # Object files for target Test
 Test_OBJECTS = \

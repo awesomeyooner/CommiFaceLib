@@ -73,29 +73,29 @@ CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.o: CMakeFiles/CommiFaceL
 CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.o: /home/aaron/Documents/GitHub/CommiFaceLib/src/util/byte_converter.cpp
 CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.o: CMakeFiles/CommiFaceLib.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.o -MF CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.o.d -o CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.o -c /home/aaron/Documents/GitHub/CommiFaceLib/src/util/byte_converter.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.o -MF CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.o.d -o CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.o -c /home/aaron/Documents/GitHub/CommiFaceLib/src/util/byte_converter.cpp
 
 CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/aaron/Documents/GitHub/CommiFaceLib/src/util/byte_converter.cpp > CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/aaron/Documents/GitHub/CommiFaceLib/src/util/byte_converter.cpp > CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.i
 
 CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aaron/Documents/GitHub/CommiFaceLib/src/util/byte_converter.cpp -o CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aaron/Documents/GitHub/CommiFaceLib/src/util/byte_converter.cpp -o CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.s
 
 CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.o: CMakeFiles/CommiFaceLib.dir/flags.make
 CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.o: /home/aaron/Documents/GitHub/CommiFaceLib/lib/libi2c/src/i2c.c
 CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.o: CMakeFiles/CommiFaceLib.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/aaron/Documents/GitHub/CommiFaceLib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.o -MF CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.o.d -o CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.o -c /home/aaron/Documents/GitHub/CommiFaceLib/lib/libi2c/src/i2c.c
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.o -MF CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.o.d -o CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.o -c /home/aaron/Documents/GitHub/CommiFaceLib/lib/libi2c/src/i2c.c
 
 CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/aaron/Documents/GitHub/CommiFaceLib/lib/libi2c/src/i2c.c > CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.i
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/aaron/Documents/GitHub/CommiFaceLib/lib/libi2c/src/i2c.c > CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.i
 
 CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/aaron/Documents/GitHub/CommiFaceLib/lib/libi2c/src/i2c.c -o CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.s
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/aaron/Documents/GitHub/CommiFaceLib/lib/libi2c/src/i2c.c -o CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.s
 
 # Object files for target CommiFaceLib
 CommiFaceLib_OBJECTS = \
