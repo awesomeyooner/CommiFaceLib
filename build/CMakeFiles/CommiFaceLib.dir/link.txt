@@ -1,2 +1,0 @@
-/usr/bin/ar qc libCommiFaceLib.a CMakeFiles/CommiFaceLib.dir/src/util/byte_converter.cpp.o CMakeFiles/CommiFaceLib.dir/lib/libi2c/src/i2c.c.o
-/usr/bin/ranlib libCommiFaceLib.a
