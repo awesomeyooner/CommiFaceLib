@@ -12,7 +12,6 @@ class CommunicationInterface
         
 
     private:
-
     
 
 }; // class CommunicationInterface

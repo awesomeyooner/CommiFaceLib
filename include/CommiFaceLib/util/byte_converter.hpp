@@ -27,6 +27,22 @@ class ByteConverter
     public:
 
         /**
+         * @brief Converts a vector of bytes of arbitrary length to a string
+         * 
+         * @param v_bytes `const std::vector<uint8_t>&` The vector of bytes
+         * @return `std::string` The converted string 
+         */
+        static std::string bytes_to_string(const std::vector<uint8_t>& v_bytes);
+
+        /**
+         * @brief Converts a string into a vector of bytes (`uint8_t`)
+         * 
+         * @param str `std::string` The string to convert
+         * @return `std::vector<uint8_t>` The byte vector 
+         */
+        static std::vector<uint8_t> string_to_bytes(const std::string& str);
+
+        /**
          * @brief Converts a vector of 4 bytes into a float 
          * 
          * @param v_bytes `std::vector<uint8_t>` The vector of 4 bytes 

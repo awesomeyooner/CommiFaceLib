@@ -1,9 +1,26 @@
 #include "CommiFaceLib/util/byte_converter.hpp"
 
-
 // Define the unions
 FloatsBytesConverter f_to_b; // float to bytes
 DoublesBytesConverter d_to_b; // double to bytes
+
+
+std::string ByteConverter::bytes_to_string(const std::vector<uint8_t>& v_bytes)
+{
+    std::string str(v_bytes.begin(), v_bytes.end());
+
+    return str;
+
+} // end of "bytes_to_string(const std::vector<uint8_t>&)"
+
+
+std::vector<uint8_t> ByteConverter::string_to_bytes(const std::string& str)
+{
+    std::vector<uint8_t> bytes(str.begin(), str.end());
+
+    return bytes;
+
+} // end of "string_to_bytes(const std::string&)"
 
 
 float ByteConverter::bytes_to_float(const std::vector<uint8_t>& v_bytes)
