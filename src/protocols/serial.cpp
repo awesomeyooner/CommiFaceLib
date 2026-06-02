@@ -6,6 +6,13 @@ using namespace std;
 using namespace status_utils;
 
 
+LibSerial::SerialPort& SerialInterface::get_port()
+{
+    return m_serial_port;
+
+} // end of "get_port()"
+
+
 StatusCode SerialInterface::init(string path, bool verbose)
 {
     if(verbose)
@@ -85,6 +92,14 @@ StatusCode SerialInterface::init_name(string name, bool verbose)
 } // end of "init_name(std::string, bool)"
 
 
+StatusCode SerialInterface::close()
+{
+    m_serial_port.Close();
+
+    return StatusCode::OK;
+
+} // end of "close()"
+
 StatusCode SerialInterface::transmit_bytes(const vector<uint8_t>& bytes)
 {
     m_serial_port.Write(bytes);
@@ -92,6 +107,33 @@ StatusCode SerialInterface::transmit_bytes(const vector<uint8_t>& bytes)
     return StatusCode::OK;
 
 } // end of "transmit_bytes(const std::vector<uint8_t>&)"
+
+
+StatusCode SerialInterface::write_to_register(uint8_t reg, const vector<uint8_t>& data)
+{
+    vector<uint8_t> write_data = create_packet(reg, data);    
+
+    return transmit_bytes(write_data);
+
+} // end of "write_to_register(uint8_t, const std::vector<uint8_t>&)"
+
+
+StatusCode SerialInterface::write_float(uint8_t reg, float data)
+{
+    vector<uint8_t> bytes = ByteConverter::float_to_bytes(data);
+
+    return write_to_register(reg, bytes);
+
+} // end of "write_float(uint8_t, float)"
+
+
+StatusCode SerialInterface::write_double(uint8_t reg, double data)
+{
+    vector<uint8_t> bytes = ByteConverter::double_to_bytes(data);
+
+    return write_to_register(reg, bytes);
+
+} // end of "write_double(uint8_t, double)"
 
 
 StatusedValue<vector<uint8_t>> SerialInterface::receive_bytes(int num_bytes, int timeout_ms)
@@ -105,9 +147,83 @@ StatusedValue<vector<uint8_t>> SerialInterface::receive_bytes(int num_bytes, int
     if(timeout_ms == -1)
         timeout_ms = m_timeout_ms;
 
+    double delay_time = block_until((double)timeout_ms / 1000);
+
     string read_data;
 
     m_serial_port.Read(read_data, num_bytes, timeout_ms);
+    m_serial_port.FlushIOBuffers();
 
-    
-}
+    vector<uint8_t> bytes = ByteConverter::string_to_bytes(read_data);
+    StatusCode status = bytes.size() == num_bytes ? StatusCode::OK : StatusCode::FAILED;
+
+    return StatusedValue<vector<uint8_t>>(bytes, status);
+
+} // end of "receive_bytes(int, int)"
+
+
+StatusedValue<vector<uint8_t>> SerialInterface::receive_bytes(char delimiter, int timeout_ms)
+{
+    // If there's no data to read
+    // Then return FAILED
+    if(!m_serial_port.IsDataAvailable())
+        return StatusedValue<vector<uint8_t>>({}, StatusCode::FAILED);
+
+    // If the user did not specify a timeout then just use the member
+    if(timeout_ms == -1)
+        timeout_ms = m_timeout_ms;
+
+    block_until((double)timeout_ms / 1000);
+
+    string read_data;
+
+    m_serial_port.ReadLine(read_data, '\n', timeout_ms);
+    m_serial_port.FlushIOBuffers();
+
+    vector<uint8_t> bytes = ByteConverter::string_to_bytes(read_data);
+    StatusCode status = bytes.size() != 0 ? StatusCode::OK : StatusCode::FAILED;
+
+    return StatusedValue<vector<uint8_t>>(bytes, status);
+
+} // end of "receive_bytes(char, int)"
+
+
+vector<uint8_t> SerialInterface::create_packet(uint8_t reg, const vector<uint8_t>& data)
+{
+    // 0: register
+    // 1: length
+    // 2... Data
+
+    uint8_t length = data.size() + 2; // 1 for register, 1 for length
+
+    std::vector<uint8_t> write_data;
+    write_data.resize(length);
+
+    // Put `data` in the end of the vector
+    std::copy(data.begin(), data.end(), write_data.begin() + 2);
+
+    write_data.at(0) = reg;
+    write_data.at(1) = length;
+
+    return write_data;
+
+} // end of "create_packet(uint8_t, const vector<uint8_t>&)"
+
+
+double SerialInterface::block_until(double timeout_seconds)
+{
+    double start = System::get_time_since_start();
+
+    while(!m_serial_port.IsDataAvailable())
+    {
+        double time = System::get_time_since_start();
+
+        if(time - start > timeout_seconds)
+            break;
+    }
+
+    double end = System::get_time_since_start();
+
+    return end - start;
+
+} // end of "block_until(function<bool()>, double)"

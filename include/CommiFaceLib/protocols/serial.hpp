@@ -13,6 +13,8 @@
 #include <filesystem>
 #include <exception>
 
+#include "CommiFaceLib/util/byte_converter.hpp"
+
 #include "plib/util/logger.hpp"
 #include "plib/util/status.hpp"
 
@@ -32,6 +34,13 @@ class SerialInterface
 
         // Where the fields are located inside a /tty entry
         const std::string FIELD_PATH = "device/..";
+
+        /**
+         * @brief Get the underlying LibSerial::SerialPort object
+         * 
+         * @return `LibSerial::SerialPort&` 
+         */
+        LibSerial::SerialPort& get_port();
 
         /**
          * @brief Opens the serial port at the given path. Note that theses paths are expected
@@ -69,9 +78,19 @@ class SerialInterface
          */
         status_utils::StatusCode init_name(std::string name, bool verbose = true);
 
+        status_utils::StatusCode close();
+
         status_utils::StatusCode transmit_bytes(const std::vector<uint8_t>& bytes);
 
+        status_utils::StatusCode write_to_register(uint8_t reg, const std::vector<uint8_t>& data = {});
+
+        status_utils::StatusCode write_float(uint8_t reg, float data);
+
+        status_utils::StatusCode write_double(uint8_t reg, double data);
+
         status_utils::StatusedValue<std::vector<uint8_t>> receive_bytes(int num_bytes, int timeout_ms = -1);
+
+        status_utils::StatusedValue<std::vector<uint8_t>> receive_bytes(char delimiter, int timeout_ms = -1);
 
     private:
 
@@ -80,6 +99,17 @@ class SerialInterface
 
         // The timeout for read operations in milliseconds
         int m_timeout_ms = 500;
+
+        /**
+         * @brief Creates a single vector that adds the register and length to the byte vector
+         * 
+         * @param reg `uint8_t` The register of this packet
+         * @param data `const std::vector<uint8_t>&` The main data
+         * @return `std::vector<uint8_t>` The resultant packet 
+         */
+        std::vector<uint8_t> create_packet(uint8_t reg, const std::vector<uint8_t>& data);
+
+        double block_until(double timeout_seconds);
 
 }; // class SerialInterface
 
