@@ -1,6 +1,8 @@
 #include "CommiFaceLib/util/byte_converter.hpp"
 
+
 // Define the unions
+IntsBytesConverter i_to_b; // int to bytes;
 FloatsBytesConverter f_to_b; // float to bytes
 DoublesBytesConverter d_to_b; // double to bytes
 
@@ -21,6 +23,41 @@ std::vector<uint8_t> ByteConverter::string_to_bytes(const std::string& str)
     return bytes;
 
 } // end of "string_to_bytes(const std::string&)"
+
+
+int ByteConverter::bytes_to_int(const std::vector<uint8_t>& v_bytes)
+{
+    // Copy the data from the vector into the union
+    i_to_b.bytes[0] = v_bytes.at(0);
+    i_to_b.bytes[1] = v_bytes.at(1);
+    i_to_b.bytes[2] = v_bytes.at(2);
+    i_to_b.bytes[3] = v_bytes.at(3);
+
+    // Return the converted value
+    return i_to_b.i_value;
+
+} // end of "bytes_to_int(const std::vector<uint8_t>&)"
+
+
+std::vector<uint8_t> ByteConverter::int_to_bytes(int value)
+{
+    // Copy the data to the union
+    i_to_b.i_value = value;
+
+    // Copy the union values into a seperate vector
+    std::vector<uint8_t> bytes(
+        {
+            i_to_b.bytes[0],
+            i_to_b.bytes[1],
+            i_to_b.bytes[2],
+            i_to_b.bytes[3]
+        }
+    );
+
+    // Return the vector
+    return bytes;
+
+} // end of "int_to_bytes"
 
 
 float ByteConverter::bytes_to_float(const std::vector<uint8_t>& v_bytes)
@@ -103,4 +140,5 @@ std::vector<uint8_t> ByteConverter::double_to_bytes(double value)
 
     // Return the vector
     return bytes;
+    
 } // end of "double_to_bytes"
