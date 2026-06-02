@@ -138,16 +138,11 @@ StatusCode SerialInterface::write_double(uint8_t reg, double data)
 
 StatusedValue<vector<uint8_t>> SerialInterface::receive_bytes(int num_bytes, int timeout_ms)
 {
-    // If there's no data to read
-    // Then return FAILED
-    if(!m_serial_port.IsDataAvailable())
-        return StatusedValue<vector<uint8_t>>({}, StatusCode::FAILED);
-
     // If the user did not specify a timeout then just use the member
     if(timeout_ms == -1)
         timeout_ms = m_timeout_ms;
 
-    double delay_time = block_until((double)timeout_ms / 1000);
+    double delay_time = block_until((double)timeout_ms / 1000.0);
 
     string read_data;
 
@@ -164,16 +159,11 @@ StatusedValue<vector<uint8_t>> SerialInterface::receive_bytes(int num_bytes, int
 
 StatusedValue<vector<uint8_t>> SerialInterface::receive_bytes(char delimiter, int timeout_ms)
 {
-    // If there's no data to read
-    // Then return FAILED
-    if(!m_serial_port.IsDataAvailable())
-        return StatusedValue<vector<uint8_t>>({}, StatusCode::FAILED);
-
     // If the user did not specify a timeout then just use the member
     if(timeout_ms == -1)
         timeout_ms = m_timeout_ms;
 
-    block_until((double)timeout_ms / 1000);
+    double delay_time = block_until((double)timeout_ms / 1000);
 
     string read_data;
 
@@ -214,10 +204,13 @@ double SerialInterface::block_until(double timeout_seconds)
 {
     double start = System::get_time_since_start();
 
+    // Keep blocking until this is true
     while(!m_serial_port.IsDataAvailable())
     {
         double time = System::get_time_since_start();
 
+        // If the time difference exceeds the timeout
+        // Then break the loop
         if(time - start > timeout_seconds)
             break;
     }
