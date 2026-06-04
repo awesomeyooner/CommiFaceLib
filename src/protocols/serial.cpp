@@ -118,6 +118,15 @@ StatusCode SerialInterface::write_to_register(uint8_t reg, const vector<uint8_t>
 } // end of "write_to_register(uint8_t, const std::vector<uint8_t>&)"
 
 
+StatusCode SerialInterface::write_int(uint8_t reg, int data)
+{
+    vector<uint8_t> bytes = ByteConverter::int_to_bytes(data);
+
+    return write_to_register(reg, bytes);
+
+} // end of "write_int(uint8_t, int)"
+
+
 StatusCode SerialInterface::write_float(uint8_t reg, float data)
 {
     vector<uint8_t> bytes = ByteConverter::float_to_bytes(data);

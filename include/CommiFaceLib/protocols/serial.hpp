@@ -84,6 +84,8 @@ class SerialInterface
 
         status_utils::StatusCode write_to_register(uint8_t reg, const std::vector<uint8_t>& data = {});
 
+        status_utils::StatusCode write_int(uint8_t reg, int data);
+
         status_utils::StatusCode write_float(uint8_t reg, float data);
 
         status_utils::StatusCode write_double(uint8_t reg, double data);
