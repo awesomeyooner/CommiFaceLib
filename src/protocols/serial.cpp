@@ -187,6 +187,56 @@ StatusedValue<vector<uint8_t>> SerialInterface::receive_bytes(char delimiter, in
 } // end of "receive_bytes(char, int)"
 
 
+StatusedValue<vector<uint8_t>> SerialInterface::request(uint8_t reg, int num_bytes, int timeout_ms)
+{
+    // Write to the device asking to send data
+    StatusCode write_status = write_to_register(reg);
+
+    // If the write itself failed then the receive will fail, so end early
+    if(write_status != StatusCode::OK)
+        return StatusedValue<vector<uint8_t>>({}, StatusCode::FAILED);
+    
+    return receive_bytes(num_bytes, timeout_ms);
+
+} // end of "request(uint8_t, int, int)"
+
+
+StatusedValue<int> SerialInterface::request_int(uint8_t reg, int timeout_ms)
+{
+    auto request_status = request(reg, sizeof(int), timeout_ms);
+
+    int data = ByteConverter::bytes_to_int(request_status.value);
+    StatusCode status = request_status.status;
+
+    return StatusedValue<int>(data, status);
+
+} // end of "request_int(uint8_t, int)"
+
+
+StatusedValue<float> SerialInterface::request_float(uint8_t reg, int timeout_ms)
+{
+    auto request_status = request(reg, sizeof(float), timeout_ms);
+
+    float data = ByteConverter::bytes_to_float(request_status.value);
+    StatusCode status = request_status.status;
+
+    return StatusedValue<float>(data, status);
+
+} // end of "request_int(uint8_t, float)"
+
+
+StatusedValue<double> SerialInterface::request_double(uint8_t reg, int timeout_ms)
+{
+    auto request_status = request(reg, sizeof(double), timeout_ms);
+
+    double data = ByteConverter::bytes_to_double(request_status.value);
+    StatusCode status = request_status.status;
+
+    return StatusedValue<double>(data, status);
+
+} // end of "request_int(uint8_t, int)"
+
+
 vector<uint8_t> SerialInterface::create_packet(uint8_t reg, const vector<uint8_t>& data)
 {
     // 0: register

@@ -94,6 +94,16 @@ class SerialInterface
 
         status_utils::StatusedValue<std::vector<uint8_t>> receive_bytes(char delimiter, int timeout_ms = -1);
 
+        status_utils::StatusedValue<std::vector<uint8_t>> request(uint8_t reg, int num_bytes, int timeout_ms = -1);
+
+        status_utils::StatusedValue<int> request_int(uint8_t reg, int timeout_ms = -1);
+
+        status_utils::StatusedValue<float> request_float(uint8_t reg, int timeout_ms = -1);
+
+        status_utils::StatusedValue<double> request_double(uint8_t reg, int timeout_ms = -1);
+
+        // status_utils::StatusedValue<int> request_int(uint8_t reg)
+
     private:
 
         // The underlying LibSerial port
