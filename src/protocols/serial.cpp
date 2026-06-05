@@ -261,12 +261,12 @@ vector<uint8_t> SerialInterface::create_packet(uint8_t reg, const vector<uint8_t
 
 double SerialInterface::block_until(double timeout_seconds)
 {
-    double start = System::get_time_since_start();
+    double start = System::get_epoch();
 
     // Keep blocking until this is true
     while(!m_serial_port.IsDataAvailable())
     {
-        double time = System::get_time_since_start();
+        double time = System::get_epoch();
 
         // If the time difference exceeds the timeout
         // Then break the loop
@@ -274,7 +274,7 @@ double SerialInterface::block_until(double timeout_seconds)
             break;
     }
 
-    double end = System::get_time_since_start();
+    double end = System::get_epoch();
 
     return end - start;
 
