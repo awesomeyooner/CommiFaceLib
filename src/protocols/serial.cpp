@@ -78,7 +78,7 @@ StatusCode SerialInterface::init_field(string field_name, string desired, bool v
     }
 
     if(verbose)
-        Logger::info("Failed to find proper device!");
+        Logger::error("Failed to find proper device!");
 
     return StatusCode::FAILED;
      
