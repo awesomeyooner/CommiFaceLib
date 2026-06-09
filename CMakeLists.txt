@@ -27,8 +27,8 @@ target_include_directories(${PROJECT_NAME}
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib>
         $<INSTALL_INTERFACE:lib>
 
-        # $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib/libi2c>
-        # $<INSTALL_INTERFACE:lib/libi2c>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib/libi2c/include>
+        $<INSTALL_INTERFACE:lib/libi2c/include>
 )
 
 # This is for this project specifically
