@@ -12,6 +12,7 @@
 #include <fstream>
 #include <filesystem>
 #include <exception>
+#include <cmath>
 
 #include "CommiFaceLib/util/byte_converter.hpp"
 
@@ -80,15 +81,19 @@ class SerialInterface
 
         status_utils::StatusCode close();
 
+        void set_timeout_ms(double timeout);
+
+        double get_timeout_ms();
+
         status_utils::StatusCode transmit_bytes(const std::vector<uint8_t>& bytes);
 
-        status_utils::StatusCode write_to_register(uint8_t reg, const std::vector<uint8_t>& data = {});
+        status_utils::StatusCode write_to_register(uint8_t reg, const std::vector<uint8_t>& data = {}, bool acknowledge = false);
 
-        status_utils::StatusCode write_int(uint8_t reg, int data);
+        status_utils::StatusCode write_int(uint8_t reg, int data, bool acknowledge = false);
 
-        status_utils::StatusCode write_float(uint8_t reg, float data);
+        status_utils::StatusCode write_float(uint8_t reg, float data, bool acknowledge = false);
 
-        status_utils::StatusCode write_double(uint8_t reg, double data);
+        status_utils::StatusCode write_double(uint8_t reg, double data, bool acknowledge = false);
 
         status_utils::StatusedValue<std::vector<uint8_t>> receive_bytes(int num_bytes, int timeout_ms = -1);
 

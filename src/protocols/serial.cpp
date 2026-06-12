@@ -100,6 +100,22 @@ StatusCode SerialInterface::close()
 
 } // end of "close()"
 
+
+void SerialInterface::set_timeout_ms(double timeout)
+{
+    // Abs just in case
+    m_timeout_ms = fabs(timeout);
+
+} // end of "set_timeout_ms(double)"
+
+
+double SerialInterface::get_timeout_ms()
+{
+    return m_timeout_ms;
+
+} // end of "get_timeout_ms()"
+
+
 StatusCode SerialInterface::transmit_bytes(const vector<uint8_t>& bytes)
 {
     m_serial_port.Write(bytes);
@@ -109,40 +125,60 @@ StatusCode SerialInterface::transmit_bytes(const vector<uint8_t>& bytes)
 } // end of "transmit_bytes(const std::vector<uint8_t>&)"
 
 
-StatusCode SerialInterface::write_to_register(uint8_t reg, const vector<uint8_t>& data)
+StatusCode SerialInterface::write_to_register(uint8_t reg, const vector<uint8_t>& data, bool acknowledge)
 {
     vector<uint8_t> write_data = create_packet(reg, data);    
 
-    return transmit_bytes(write_data);
+    StatusCode transmit_status = transmit_bytes(write_data);
 
-} // end of "write_to_register(uint8_t, const std::vector<uint8_t>&)"
+    // If not using acknowledge then just end
+    if(!acknowledge)
+        return transmit_status;
+
+    // Don't check the echo / acknowledge if the initial trasmit fails
+    if(transmit_status != StatusCode::OK)
+        return StatusCode::FAILED;
+
+    StatusedValue<vector<uint8_t>> read_status = receive_bytes((int)data.size());
+
+    // If the read fails then end early
+    if(!read_status.is_OK())
+        return StatusCode::FAILED;
+
+    // Acknowledge if the bytes are the same or not
+    bool are_bytes_same = data == read_status.value;
+ 
+    // If bytes are same then OK, FAILED otherwise
+    return are_bytes_same ? StatusCode::OK : StatusCode::FAILED;
+
+} // end of "write_to_register(uint8_t, const std::vector<uint8_t>&, bool)"
 
 
-StatusCode SerialInterface::write_int(uint8_t reg, int data)
+StatusCode SerialInterface::write_int(uint8_t reg, int data, bool acknowledge)
 {
     vector<uint8_t> bytes = ByteConverter::int_to_bytes(data);
 
-    return write_to_register(reg, bytes);
+    return write_to_register(reg, bytes, acknowledge);
 
-} // end of "write_int(uint8_t, int)"
+} // end of "write_int(uint8_t, int, bool)"
 
 
-StatusCode SerialInterface::write_float(uint8_t reg, float data)
+StatusCode SerialInterface::write_float(uint8_t reg, float data, bool acknowledge)
 {
     vector<uint8_t> bytes = ByteConverter::float_to_bytes(data);
 
-    return write_to_register(reg, bytes);
+    return write_to_register(reg, bytes, acknowledge);
 
-} // end of "write_float(uint8_t, float)"
+} // end of "write_float(uint8_t, float, bool)"
 
 
-StatusCode SerialInterface::write_double(uint8_t reg, double data)
+StatusCode SerialInterface::write_double(uint8_t reg, double data, bool acknowledge)
 {
     vector<uint8_t> bytes = ByteConverter::double_to_bytes(data);
 
-    return write_to_register(reg, bytes);
+    return write_to_register(reg, bytes, acknowledge);
 
-} // end of "write_double(uint8_t, double)"
+} // end of "write_double(uint8_t, double, bool)"
 
 
 StatusedValue<vector<uint8_t>> SerialInterface::receive_bytes(int num_bytes, int timeout_ms)
