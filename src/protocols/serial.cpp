@@ -25,7 +25,10 @@ StatusCode SerialInterface::init(string path, bool verbose)
     catch(const exception& e)
     {
         if(verbose)
-            Logger::info("Failed to open device at: " + path);
+        {   
+            Logger::error("Failed to open device at: " + path);
+            Logger::error("Error Caught: " + string(e.what()));
+        }
 
         return StatusCode::FAILED;
     }
