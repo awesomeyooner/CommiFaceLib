@@ -79,12 +79,33 @@ class SerialInterface
          */
         status_utils::StatusCode init_name(std::string name, bool verbose = true);
 
+        /**
+         * @brief Close the underlying serial port
+         * 
+         * @return `status_utils::StatusCode` OK if successful, FAILED otherwise 
+         */
         status_utils::StatusCode close();
 
+        /**
+         * @brief Set the timeout duration for reads and writes in milliseconds
+         * 
+         * @param timeout `double` 
+         */
         void set_timeout_ms(double timeout);
 
+        /**
+         * @brief Get the timeout duration for reads and writes in milliseconds
+         * 
+         * @return double 
+         */
         double get_timeout_ms();
 
+        /**
+         * @brief Transmit a vector of bytes
+         * 
+         * @param bytes `const std::vector<uint8_t>& bytes
+         * @return `status_utils::StatusCode` 
+         */
         status_utils::StatusCode transmit_bytes(const std::vector<uint8_t>& bytes);
 
         status_utils::StatusCode write_to_register(uint8_t reg, const std::vector<uint8_t>& data = {}, bool acknowledge = false);

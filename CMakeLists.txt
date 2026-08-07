@@ -15,7 +15,9 @@ add_library(${PROJECT_NAME}
     # libi2c
     lib/libi2c/src/i2c.c
 
+    # protocols
     src/protocols/serial.cpp
+    src/protocols/i2c.cpp
 )
 
 add_subdirectory(lib/plib)
