@@ -15,6 +15,9 @@ add_library(${PROJECT_NAME}
     # libi2c
     lib/libi2c/src/i2c.c
 
+    # interfaces
+    src/interfaces/communication_interface.cpp
+
     # protocols
     src/protocols/serial.cpp
     src/protocols/i2c.cpp
