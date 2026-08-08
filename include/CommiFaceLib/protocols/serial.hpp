@@ -23,6 +23,12 @@
 #include <libserial/SerialPort.h>
 
 
+/**
+ * @brief Represents a Serial device. Call the static `init` or init functions to initialize which port to use for Serial transactions.
+ * 
+ * Please use `sudo apt install libserial-dev`
+ * 
+ */
 class SerialInterface : public CommunicationInterface
 {
 

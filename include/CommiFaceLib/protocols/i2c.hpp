@@ -19,7 +19,18 @@
 #include "plib/util/logger.hpp"
 #include "plib/util/status.hpp"
 
-
+/**
+ * @brief Represents an I2C device. Call the static `init` or init functions to initialize which bus to use for I2C transactions.
+ * 
+ * Please use `sudo apt install -y i2c-tools`
+ * 
+ * and
+ * 
+ * `sudo i2cdetect -l`
+ * 
+ * To scan all i2c devices
+ * 
+ */
 class I2C : public CommunicationInterface 
 {
 
