@@ -104,21 +104,6 @@ StatusCode SerialInterface::close()
 } // end of "close()"
 
 
-void SerialInterface::set_timeout_ms(double timeout)
-{
-    // Abs just in case
-    m_timeout_ms = fabs(timeout);
-
-} // end of "set_timeout_ms(double)"
-
-
-double SerialInterface::get_timeout_ms()
-{
-    return m_timeout_ms;
-
-} // end of "get_timeout_ms()"
-
-
 StatusCode SerialInterface::transmit_bytes(const vector<uint8_t>& bytes)
 {
     m_serial_port.Write(bytes);
@@ -128,67 +113,11 @@ StatusCode SerialInterface::transmit_bytes(const vector<uint8_t>& bytes)
 } // end of "transmit_bytes(const std::vector<uint8_t>&)"
 
 
-StatusCode SerialInterface::write_to_register(uint8_t reg, const vector<uint8_t>& data, bool acknowledge)
-{
-    vector<uint8_t> write_data = create_packet(reg, data);    
-
-    StatusCode transmit_status = transmit_bytes(write_data);
-
-    // If not using acknowledge then just end
-    if(!acknowledge)
-        return transmit_status;
-
-    // Don't check the echo / acknowledge if the initial trasmit fails
-    if(transmit_status != StatusCode::OK)
-        return StatusCode::FAILED;
-
-    StatusedValue<vector<uint8_t>> read_status = receive_bytes((int)data.size());
-
-    // If the read fails then end early
-    if(!read_status.is_OK())
-        return StatusCode::FAILED;
-
-    // Acknowledge if the bytes are the same or not
-    bool are_bytes_same = data == read_status.value;
- 
-    // If bytes are same then OK, FAILED otherwise
-    return are_bytes_same ? StatusCode::OK : StatusCode::FAILED;
-
-} // end of "write_to_register(uint8_t, const std::vector<uint8_t>&, bool)"
-
-
-StatusCode SerialInterface::write_int(uint8_t reg, int data, bool acknowledge)
-{
-    vector<uint8_t> bytes = ByteConverter::int_to_bytes(data);
-
-    return write_to_register(reg, bytes, acknowledge);
-
-} // end of "write_int(uint8_t, int, bool)"
-
-
-StatusCode SerialInterface::write_float(uint8_t reg, float data, bool acknowledge)
-{
-    vector<uint8_t> bytes = ByteConverter::float_to_bytes(data);
-
-    return write_to_register(reg, bytes, acknowledge);
-
-} // end of "write_float(uint8_t, float, bool)"
-
-
-StatusCode SerialInterface::write_double(uint8_t reg, double data, bool acknowledge)
-{
-    vector<uint8_t> bytes = ByteConverter::double_to_bytes(data);
-
-    return write_to_register(reg, bytes, acknowledge);
-
-} // end of "write_double(uint8_t, double, bool)"
-
-
 StatusedValue<vector<uint8_t>> SerialInterface::receive_bytes(int num_bytes, int timeout_ms)
 {
     // If the user did not specify a timeout then just use the member
     if(timeout_ms == -1)
-        timeout_ms = m_timeout_ms;
+        timeout_ms = get_timeout_ms();
 
     double delay_time = block_until((double)timeout_ms / 1000.0);
 
@@ -209,13 +138,13 @@ StatusedValue<vector<uint8_t>> SerialInterface::receive_bytes(char delimiter, in
 {
     // If the user did not specify a timeout then just use the member
     if(timeout_ms == -1)
-        timeout_ms = m_timeout_ms;
+        timeout_ms = get_timeout_ms();
 
     double delay_time = block_until((double)timeout_ms / 1000);
 
     string read_data;
 
-    m_serial_port.ReadLine(read_data, '\n', timeout_ms);
+    m_serial_port.ReadLine(read_data, delimiter, timeout_ms);
     m_serial_port.FlushIOBuffers();
 
     vector<uint8_t> bytes = ByteConverter::string_to_bytes(read_data);
@@ -224,78 +153,6 @@ StatusedValue<vector<uint8_t>> SerialInterface::receive_bytes(char delimiter, in
     return StatusedValue<vector<uint8_t>>(bytes, status);
 
 } // end of "receive_bytes(char, int)"
-
-
-StatusedValue<vector<uint8_t>> SerialInterface::request(uint8_t reg, int num_bytes, int timeout_ms)
-{
-    // Write to the device asking to send data
-    StatusCode write_status = write_to_register(reg);
-
-    // If the write itself failed then the receive will fail, so end early
-    if(write_status != StatusCode::OK)
-        return StatusedValue<vector<uint8_t>>({}, StatusCode::FAILED);
-    
-    return receive_bytes(num_bytes, timeout_ms);
-
-} // end of "request(uint8_t, int, int)"
-
-
-StatusedValue<int> SerialInterface::request_int(uint8_t reg, int timeout_ms)
-{
-    auto request_status = request(reg, sizeof(int), timeout_ms);
-
-    int data = ByteConverter::bytes_to_int(request_status.value);
-    StatusCode status = request_status.status;
-
-    return StatusedValue<int>(data, status);
-
-} // end of "request_int(uint8_t, int)"
-
-
-StatusedValue<float> SerialInterface::request_float(uint8_t reg, int timeout_ms)
-{
-    auto request_status = request(reg, sizeof(float), timeout_ms);
-
-    float data = ByteConverter::bytes_to_float(request_status.value);
-    StatusCode status = request_status.status;
-
-    return StatusedValue<float>(data, status);
-
-} // end of "request_int(uint8_t, float)"
-
-
-StatusedValue<double> SerialInterface::request_double(uint8_t reg, int timeout_ms)
-{
-    auto request_status = request(reg, sizeof(double), timeout_ms);
-
-    double data = ByteConverter::bytes_to_double(request_status.value);
-    StatusCode status = request_status.status;
-
-    return StatusedValue<double>(data, status);
-
-} // end of "request_int(uint8_t, int)"
-
-
-vector<uint8_t> SerialInterface::create_packet(uint8_t reg, const vector<uint8_t>& data)
-{
-    // 0: register
-    // 1: length
-    // 2... Data
-
-    uint8_t length = data.size() + 2; // 1 for register, 1 for length
-
-    std::vector<uint8_t> write_data;
-    write_data.resize(length);
-
-    // Put `data` in the end of the vector
-    std::copy(data.begin(), data.end(), write_data.begin() + 2);
-
-    write_data.at(0) = reg;
-    write_data.at(1) = length;
-
-    return write_data;
-
-} // end of "create_packet(uint8_t, const vector<uint8_t>&)"
 
 
 double SerialInterface::block_until(double timeout_seconds)

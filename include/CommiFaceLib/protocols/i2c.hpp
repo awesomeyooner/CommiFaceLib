@@ -13,25 +13,37 @@
 #include <filesystem>
 #include <system_error>
 
+#include "CommiFaceLib/interfaces/communication_interface.hpp"
 #include "CommiFaceLib/util/byte_converter.hpp"
 
 #include "plib/util/logger.hpp"
 #include "plib/util/status.hpp"
 
 
-class I2C{
+class I2C : public CommunicationInterface 
+{
 
     public:
 
         // The base path where the i2c device folders are
-        const std::string SYS_DEVICE_PATH = "/sys/bus/i2c/devices";
+        inline static const std::string SYS_DEVICE_PATH = "/sys/bus/i2c/devices";
 
         // What all i2c devices start with
-        const std::string I2C_DEVICE_PREFIX = "i2c-"; 
+        inline static const std::string I2C_DEVICE_PREFIX = "i2c-"; 
 
         // The file inside /syus/bus/i2c/devices/<device> that contains the name
         // of the adapter
-        const std::string DEVICE_NAME_FILE = "name";
+        inline static const std::string DEVICE_NAME_FILE = "name";
+
+        /**
+         * @brief Initialize the internal I2C device with the given settings
+         * 
+         * @param address `int` The address
+         * @param bytes_per_page `int = 8` The number of bytes per page. Defaults to 8
+         * @param timeout_ms `int = -1` The timeout for read transactions in milliseconds. Defaults to internal
+         * default
+         */
+        I2C(int address, int bytes_per_page = 8, int timeout_ms = -1);
 
         /**
          * @brief Initialize the i2c bus with the device path
@@ -39,7 +51,7 @@ class I2C{
          * @param name `char*` Default `"/dev/i2c-9"` - The i2c device path
          * @return `status_utils::StatusCode` The Status, OK if properly initialized, FAILED otherwise 
          */
-        status_utils::StatusCode init(const char* name = "/dev/i2c-9");
+        static status_utils::StatusCode init(const char* name = "/dev/i2c-9");
 
 
         /**
@@ -48,7 +60,7 @@ class I2C{
          * @param adapter_number `int` The device number, found in `"/dev/i2c-<num>"`
          * @return `status_utils::StatusCode` OK if found, FAILED otherwise
          */
-        status_utils::StatusCode init(int adapter_number);
+        static status_utils::StatusCode init(int adapter_number);
 
 
         /**
@@ -58,67 +70,46 @@ class I2C{
          * @param verbose `bool` Default `false` - Displays the finding process if true
          * @return `status_utils::StatusCode` OK if it found the adapter, FAILED otherwise 
          */
-        status_utils::StatusCode init_name(std::string name, bool verbose = false);
+        static status_utils::StatusCode init_name(std::string name, bool verbose = false);
 
         /**
          * @brief Get the bus number
          * 
          * @return `int` the bus number 
          */
-        int get_bus();
+        static int get_bus();
 
-        status_utils::StatusCode transmit_bytes(i2c_device* device, const std::vector<uint8_t>& bytes);
+        /**
+         * @brief Get the underlying `i2c_device` struct as a reference
+         * 
+         * @return `i2c_device&` 
+         */
+        i2c_device& get_device();
 
-        status_utils::StatusedValue<std::vector<uint8_t>> receive_bytes(i2c_device* device, int num_bytes);
+        /**
+         * @brief Transmit the given bytes via i2c
+         * 
+         * @param bytes `const std::vector<uint8_t>&`
+         * @return `status_utils::StatusCode` OK if successful, FAILED otherwise 
+         */
+        status_utils::StatusCode transmit_bytes(const std::vector<uint8_t>& bytes) override;
+
+        /**
+         * @brief Read a specific number of bytes
+         * 
+         * @param num_bytes `int`
+         * @param timeout_ms `int = -1`
+         * @return `status_utils::StatusedValue<std::vector<uint8_t>>` 
+         */
+        status_utils::StatusedValue<std::vector<uint8_t>> receive_bytes(int num_bytes, int timeout_ms = -1) override;
         
-        /**
-         * @brief Read a specific number of bytes from the bus
-         * 
-         * @param device `i2c_device*` The i2c device to read from
-         * @param num_bytes `size_t` The number of bytes to read
-         * @return `status_utils::StatusedValue<std::vector<uint8_t>>` Vector full of bytes that it read with status 
-         */
-        status_utils::StatusedValue<std::vector<uint8_t>> read_bus(i2c_device* device, size_t num_bytes);
-        
-        /**
-         * @brief Read a float from the bus. Simply just reads 4 bytes and converts it to a float
-         * 
-         * @param device `i2c_device*` The i2c device to read from
-         * @return `status_utils::StatusedValue<float>` The float and status 
-         */
-        status_utils::StatusedValue<float> read_bus(i2c_device* device);
-
-        /**
-         * @brief Write a vector of bytes to a device
-         * 
-         * @param device `i2c_device*` The i2c device to write to
-         * @param write `std::vector<uint8_t>&` The vector of bytes
-         * @return `status_utils::StatusCode` OK if it was successful, FAILED otherwise 
-         */
-        status_utils::StatusCode write_bus(i2c_device* device, std::vector<uint8_t>& write);
-
-        /**
-         * @brief Write a single byte to a device
-         * 
-         * @param device `i2c_device*` The i2c device to write to
-         * @param write `uint8_t` The byte to write
-         * @return `status_utils::StatusCode` OK if it was successful, FAILED otherwise 
-         */
-        status_utils::StatusCode write_bus(i2c_device* device, uint8_t write);
-       
-        /**
-         * @brief Write a float (4 bytes) to a device
-         * 
-         * @param device `i2c_device` The i2c device to write to
-         * @param data `float` The float to write
-         * @return `status_utils::StatusCode` OK if it was successful, FAILED otherwise  
-         */
-        status_utils::StatusCode write_bus(i2c_device* device, float data);
-
     private:
 
         // The internal i2c bus number
-        int m_bus = -1;
+        static inline int m_bus = -1;
+
+        // The internal i2c device
+        i2c_device m_device;
 
 }; // class I2C
 

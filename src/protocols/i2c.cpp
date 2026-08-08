@@ -4,9 +4,24 @@
 using namespace std;
 using namespace status_utils;
 
-namespace fs = filesystem;
 
-using ByteData = vector<uint8_t>;
+I2C::I2C(int address, int bytes_per_page, int timeout_ms)
+{
+    // If the timeout param was set
+    // Then set the internal timeout equal to it
+    if(timeout_ms != -1)
+        set_timeout_ms(timeout_ms);
+
+    // Initialize the internal device object with the following settings
+    m_device.addr = address;
+    m_device.bus = get_bus();
+    m_device.page_bytes = bytes_per_page; // 8 bytes max for MCP2221A
+    m_device.iaddr_bytes = 0;
+    m_device.tenbit = 0;
+    m_device.flags = 0;
+    m_device.delay = get_timeout_ms(); // milliseconds
+
+} // end of "I2C(int, int, int)"
 
 
 StatusCode I2C::init(const char* name)
@@ -35,7 +50,7 @@ StatusCode I2C::init_name(string name, bool verbose)
 {
     // For every folder within the main path, check the names match
     // the given name. If it does, use that adapter and return OK
-    for(auto entry : fs::directory_iterator(SYS_DEVICE_PATH))
+    for(auto entry : filesystem::directory_iterator(SYS_DEVICE_PATH))
     {   
         // The the i2c device folder name "i2c-<num>"
         string directory_name = entry.path().filename().string();
@@ -75,7 +90,7 @@ StatusCode I2C::init_name(string name, bool verbose)
         auto name_file = entry.path() / DEVICE_NAME_FILE;
 
         // If it's not a regular file then skip
-        if(!fs::is_regular_file(name_file))
+        if(!filesystem::is_regular_file(name_file))
             continue;
 
         // Open the file
@@ -123,102 +138,38 @@ int I2C::get_bus()
 {
     return m_bus;
 
-} // end of "get_m_bus"
+} // end of "get_bus()"
 
 
-StatusCode I2C::transmit_bytes(i2c_device* device, const vector<uint8_t>& bytes)
+i2c_device& I2C::get_device()
 {
-    StatusCode status = i2c_write(device, 0, bytes.data(), bytes.size()) == bytes.size() ? 
+    return m_device;
+
+} // end of "get_device()"
+
+
+StatusCode I2C::transmit_bytes(const vector<uint8_t>& bytes)
+{
+    StatusCode status = i2c_write(&m_device, 0, bytes.data(), bytes.size()) == bytes.size() ? 
         StatusCode::OK : StatusCode::FAILED;
 
     return status;
 
-} // end of "transmit_bytes(i2c_device*, const vector<uint8_t>&)"
+} // end of "transmit_bytes(const vector<uint8_t>&)"
 
 
-StatusedValue<vector<uint8_t>> I2C::receive_bytes(i2c_device* device, int num_bytes)
+StatusedValue<vector<uint8_t>> I2C::receive_bytes(int num_bytes, int timeout_ms)
 {
+    if(timeout_ms == -1)
+        timeout_ms = get_timeout_ms();
+
     // Store the read bytes
     vector<uint8_t> bytes;
 
     // Perform the i2c read
-    StatusCode status = i2c_read(device, 0, bytes.data(), num_bytes) == num_bytes ?
+    StatusCode status = i2c_read(&m_device, 0, bytes.data(), num_bytes) == num_bytes ?
         StatusCode::OK : StatusCode::FAILED;
 
     return StatusedValue<vector<uint8_t>>(bytes, status);
 
 } // end of "receive_bytes(i2c_device, int)"
-
-
-StatusedValue<vector<uint8_t>> I2C::read_bus(i2c_device* device, size_t num_bytes)
-{
-    // Create an empty array to store the bytes
-    uint8_t buffer[num_bytes] = {};
-
-    vector<uint8_t> buf;
-
-    // Read the m_bus and store it in `buffer` 
-    // If it returns the number of requested bytes, it worked (OK), if not, it failed (FAILED)
-    StatusCode status = i2c_read(device, 0, buf.data(), num_bytes) == num_bytes ? StatusCode::OK : StatusCode::FAILED;
-
-    // Create the vector equivalent of `buffer`
-    vector<uint8_t> vec(buffer, buffer + num_bytes);
-
-    // Return the vector and status
-    return StatusedValue<vector<uint8_t>>(vec, status);
-
-} // end of "read_m_bus"
-
-
-StatusedValue<float> I2C::read_bus(i2c_device* device)
-{
-    // The number of bytes in a `float`
-    size_t float_size = sizeof(float);
-
-    // Read 4 bytes from the m_bus
-    StatusedValue<vector<uint8_t>> read = read_bus(device, float_size);
-
-    // Convert Byte Vector to Float
-    float value = ByteConverter::bytes_to_float(read.value);
-
-    // Return the float and status
-    return StatusedValue<float>(value, read.status);
-    
-} // end of "read_m_bus"
-
-
-StatusCode I2C::write_bus(i2c_device* device, vector<uint8_t>& write)
-{
-    // Create an array with the same size of `write` since libi2c uses arrays but I like vectors
-    uint8_t buffer[write.size()];
-
-    // Copy the contents from the vector to the array
-    copy(write.begin(), write.end(), buffer);
-
-    // Write to the device. If it returns the number of bytes in `write, it worked (OK), if not, it failed (FAILED)
-    return i2c_write(device, 0, buffer, write.size()) == write.size() ? 
-        StatusCode::OK : StatusCode::FAILED;
-
-} // end of "write_m_bus"
-
-
-StatusCode I2C::write_bus(i2c_device* device, uint8_t write)
-{
-    // Store the byte into a vector so we can use the original `write_m_bus` method
-    vector data = {write};
-
-    // Call the `write_m_bus` method
-    return write_bus(device, data);
-
-} // end of "write_m_bus"
-
-
-StatusCode I2C::write_bus(i2c_device* device, float data)
-{
-    // Convert Float to Byte Array
-    vector<uint8_t> bytes = ByteConverter::float_to_bytes(data);
-
-    // Write the array to the device
-    return write_bus(device, bytes);
-    
-} // end of "write_m_bus"
