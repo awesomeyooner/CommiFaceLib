@@ -13,43 +13,34 @@ sudo apt install libserial-dev
 sudo usermod -a -G dialout $USER
 ```
 
-## Usage
+## Setup
 
-Put this folder within `/lib`
-
-The folder directory should look something like this
+The folder structure should resemble the following:
 
 ```c++
-|-- project/
-|	|-- build // this will be created automatically by cmake
-|	|-- include/
-|	|-- src/
-|	|	|-- main.cpp
-|	|-- test/
-|	|	|-- test.cpp
-|   |-- lib/
-|   |   |-- CommiFaceLib/ // this library
-|	|-- CMakeLists.txt
+.
+├── build
+├── lib // Put here!
+├── include
+├── src
+└── CMakeLists.txt
 ```
 
+First, clone the repo into `/lib`
+
+```bash
+# Clone as standalone
+$ git clone https://github.com/awesomeyooner/PlotLib.git && git submodule update --init --recursive
+
+# Clone as submodule
+$ git submodule add https://github.com/awesomeyooner/PlotLib.git && git submodule update --init --recursive
+```
+
+Also make sure that [plib](https://github.com/awesomeyooner/plib) is also put in `/lib`!
+
+Then add these lines to your `CMakeLists.txt` file
+
 ```cmake
-# CMakeLists.txt
-
-# CMakeLists.txt
-
-# Add this library as a subdirectory
 add_subdirectory(lib/CommiFaceLib)
-
-# Link the dependencies / libraries
-target_link_libraries( ${MAIN_EXEC} 
-  ${THIS_PACKAGE_INCLUDE_DEPENDS} 
-  CommiFaceLib
-)
-
-# Optional, link this with the test exec
-target_link_libraries(${TEST_EXEC} 
-  GTest::gtest_main
-  ${THIS_PACKAGE_INCLUDE_DEPENDS} 
-  CommiFaceLib
-)
+target_link_libraries( ${MAIN_EXEC} CommiFaceLib )
 ```

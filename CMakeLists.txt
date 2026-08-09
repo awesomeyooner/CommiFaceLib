@@ -23,15 +23,6 @@ add_library(${PROJECT_NAME}
     src/protocols/i2c.cpp
 )
 
-if(PROJECT_IS_TOP_LEVEL)
-    add_subdirectory(lib/plib)
-endif()
-
-target_link_libraries(${PROJECT_NAME} plib)
-
-# add_subdirectory(lib/plib)
-# target_link_libraries(${PROJECT_NAME} plib)
-
 target_include_directories(${PROJECT_NAME}
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -45,6 +36,7 @@ target_include_directories(${PROJECT_NAME}
 
 # This is for this project specifically
 target_link_libraries(${PROJECT_NAME}
+    plib
     serial
 )
 
