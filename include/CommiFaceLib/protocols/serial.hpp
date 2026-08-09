@@ -3,7 +3,6 @@
 
 
 #include <string>
-#include <string>
 #include <iostream>
 #include <functional>
 #include <vector>
@@ -14,6 +13,8 @@
 #include <exception>
 #include <cmath>
 
+#include "CommiFaceLib/interfaces/communication_interface.hpp"
+
 #include "CommiFaceLib/util/byte_converter.hpp"
 
 #include "plib/util/logger.hpp"
@@ -22,7 +23,13 @@
 #include <libserial/SerialPort.h>
 
 
-class SerialInterface
+/**
+ * @brief Represents a Serial device. Call the static `init` or init functions to initialize which port to use for Serial transactions.
+ * 
+ * Please use `sudo apt install libserial-dev`
+ * 
+ */
+class SerialInterface : public CommunicationInterface
 {
 
     public: 
@@ -86,66 +93,16 @@ class SerialInterface
          */
         status_utils::StatusCode close();
 
-        /**
-         * @brief Set the timeout duration for reads and writes in milliseconds
-         * 
-         * @param timeout `double` 
-         */
-        void set_timeout_ms(double timeout);
+        status_utils::StatusCode transmit_bytes(const std::vector<uint8_t>& bytes) override;
 
-        /**
-         * @brief Get the timeout duration for reads and writes in milliseconds
-         * 
-         * @return double 
-         */
-        double get_timeout_ms();
+        status_utils::StatusedValue<std::vector<uint8_t>> receive_bytes(int num_bytes, int timeout_ms = -1) override;
 
-        /**
-         * @brief Transmit a vector of bytes
-         * 
-         * @param bytes `const std::vector<uint8_t>& bytes
-         * @return `status_utils::StatusCode` 
-         */
-        status_utils::StatusCode transmit_bytes(const std::vector<uint8_t>& bytes);
-
-        status_utils::StatusCode write_to_register(uint8_t reg, const std::vector<uint8_t>& data = {}, bool acknowledge = false);
-
-        status_utils::StatusCode write_int(uint8_t reg, int data, bool acknowledge = false);
-
-        status_utils::StatusCode write_float(uint8_t reg, float data, bool acknowledge = false);
-
-        status_utils::StatusCode write_double(uint8_t reg, double data, bool acknowledge = false);
-
-        status_utils::StatusedValue<std::vector<uint8_t>> receive_bytes(int num_bytes, int timeout_ms = -1);
-
-        status_utils::StatusedValue<std::vector<uint8_t>> receive_bytes(char delimiter, int timeout_ms = -1);
-
-        status_utils::StatusedValue<std::vector<uint8_t>> request(uint8_t reg, int num_bytes, int timeout_ms = -1);
-
-        status_utils::StatusedValue<int> request_int(uint8_t reg, int timeout_ms = -1);
-
-        status_utils::StatusedValue<float> request_float(uint8_t reg, int timeout_ms = -1);
-
-        status_utils::StatusedValue<double> request_double(uint8_t reg, int timeout_ms = -1);
-
-        // status_utils::StatusedValue<int> request_int(uint8_t reg)
+        status_utils::StatusedValue<std::vector<uint8_t>> receive_bytes(char delimiter = '\n', int timeout_ms = -1);
 
     private:
 
         // The underlying LibSerial port
         LibSerial::SerialPort m_serial_port;
-
-        // The timeout for read operations in milliseconds
-        int m_timeout_ms = 500;
-
-        /**
-         * @brief Creates a single vector that adds the register and length to the byte vector
-         * 
-         * @param reg `uint8_t` The register of this packet
-         * @param data `const std::vector<uint8_t>&` The main data
-         * @return `std::vector<uint8_t>` The resultant packet 
-         */
-        std::vector<uint8_t> create_packet(uint8_t reg, const std::vector<uint8_t>& data);
 
         double block_until(double timeout_seconds);
 
