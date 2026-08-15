@@ -102,7 +102,18 @@ class ByteConverter
          */
         static std::vector<uint8_t> double_to_bytes(double value);
 
+        template <typename T>
+        static T from_bytes(const std::vector<uint8_t>& v_bytes);
+
+        template <typename T>
+        static std::vector<uint8_t> to_bytes(T value);
+
+
 }; // class ByteConverter
+
+
+// Include implementation file for template methods
+#include "CommiFaceLib/util/byte_converter.tpp"
 
 
 #endif // BYTE_CONVERTER_HPP

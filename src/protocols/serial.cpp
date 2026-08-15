@@ -148,11 +148,28 @@ StatusedValue<vector<uint8_t>> SerialInterface::receive_bytes(char delimiter, in
     m_serial_port.FlushIOBuffers();
 
     vector<uint8_t> bytes = ByteConverter::string_to_bytes(read_data);
+
+    // Remove the delimiter
+    if(bytes.size() > 0)
+        bytes.pop_back();
+
     StatusCode status = bytes.size() != 0 ? StatusCode::OK : StatusCode::FAILED;
 
     return StatusedValue<vector<uint8_t>>(bytes, status);
 
 } // end of "receive_bytes(char, int)"
+
+
+StatusedValue<vector<uint8_t>> SerialInterface::request(uint8_t reg, char delimiter, int timeout_ms)
+{
+    StatusCode write_status = write_packet(reg);
+
+    if(write_status != StatusCode::OK)
+        return StatusedValue<vector<uint8_t>>({}, StatusCode::FAILED);
+
+    return receive_bytes(delimiter, timeout_ms);
+
+} // end of "request(uint8_t, char = '\n', int = -1)"
 
 
 double SerialInterface::block_until(double timeout_seconds)
