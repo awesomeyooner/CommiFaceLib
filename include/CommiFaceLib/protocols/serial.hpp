@@ -93,11 +93,42 @@ class SerialInterface : public CommunicationInterface
          */
         status_utils::StatusCode close();
 
+        /**
+         * @brief Transmit the given bytes over serial
+         * 
+         * @param bytes `const std::vector<uint8_t>&`
+         * @return `status_utils::StatusCode` OK if successful, FAILED otherwise 
+         */
         status_utils::StatusCode transmit_bytes(const std::vector<uint8_t>& bytes) override;
 
+        /**
+         * @brief Receive the given number of bytes. 
+         * 
+         * @param num_bytes `int`
+         * @param timeout_ms `int`
+         * @return `status_utils::StatusedValue<std::vector<uint8_t>>` OK if successful, FAILED otherwise 
+         */
         status_utils::StatusedValue<std::vector<uint8_t>> receive_bytes(int num_bytes, int timeout_ms = -1) override;
 
+        /**
+         * @brief Receive bytes until the delimiter is reached. The returned vector will not include the delimiter.
+         * 
+         * @param delimiter `char = '\n'` The delimiter character to use.
+         * @param timeout_ms `int`
+         * @return `status_utils::StatusedValue<std::vector<uint8_t>>` 
+         */
         status_utils::StatusedValue<std::vector<uint8_t>> receive_bytes(char delimiter = '\n', int timeout_ms = -1);
+
+        /**
+         * @brief Read bytes from a specific register until the delimiter is reached. The returned vector will not include
+         * the delimiter
+         * 
+         * @param reg `uint8_t`
+         * @param delimiter `char = '\n'` The delimiter character to use.
+         * @param timeout `int = -1`
+         * @return `status_utils::StatusedValue<std::vector<uint8_t>>`
+         */
+        status_utils::StatusedValue<std::vector<uint8_t>> request(uint8_t reg, char delimiter = '\n', int timeout = -1);
 
     private:
 
