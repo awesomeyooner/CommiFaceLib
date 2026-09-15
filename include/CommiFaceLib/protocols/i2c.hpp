@@ -77,6 +77,9 @@ class I2C : public CommunicationInterface
         /**
          * @brief Initialize the i2c bus with the device name
          * 
+         * For instance, the `MCP2221A` I2C adapter has the name of "MCP2221 usb-i2c bridge" and can be
+         * initialized by just using `MCP2221`
+         * 
          * @param name `std::string` The device name
          * @param verbose `bool` Default `false` - Displays the finding process if true
          * @return `status_utils::StatusCode` OK if it found the adapter, FAILED otherwise 
