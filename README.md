@@ -30,10 +30,10 @@ First, clone the repo into `/lib`
 
 ```bash
 # Clone as standalone
-$ git clone https://github.com/awesomeyooner/PlotLib.git && git submodule update --init --recursive
+$ git clone https://github.com/awesomeyooner/CommiFaceLib.git && git submodule update --init --recursive
 
 # Clone as submodule
-$ git submodule add https://github.com/awesomeyooner/PlotLib.git && git submodule update --init --recursive
+$ git submodule add https://github.com/awesomeyooner/CommiFaceLib.git && git submodule update --init --recursive
 ```
 
 Also make sure that [plib](https://github.com/awesomeyooner/plib) is also put in `/lib`!
