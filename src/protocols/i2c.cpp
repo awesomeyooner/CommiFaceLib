@@ -166,6 +166,8 @@ StatusedValue<vector<uint8_t>> I2C::receive_bytes(int num_bytes, int timeout_ms)
     // Store the read bytes
     vector<uint8_t> bytes;
 
+    bytes.resize(num_bytes);
+
     // Perform the i2c read
     StatusCode status = i2c_read(&m_device, 0, bytes.data(), num_bytes) == num_bytes ?
         StatusCode::OK : StatusCode::FAILED;

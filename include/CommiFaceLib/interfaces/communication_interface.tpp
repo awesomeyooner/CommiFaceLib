@@ -18,6 +18,10 @@ StatusCode CommunicationInterface::write_data(uint8_t reg, T value, bool acknowl
         data = ByteConverter::float_to_bytes(value);
     else if constexpr (std::is_same_v<T, int>)
         data = ByteConverter::int_to_bytes(value);
+    else if constexpr (std::is_same_v<T, string>)
+        data = ByteConverter::string_to_bytes(value);
+    else if constexpr (std::is_same_v<T, vector<uint8_t>>)
+        data = value;
     else
         return StatusCode::ERROR;
 
