@@ -21,6 +21,7 @@ add_library(${PROJECT_NAME}
     # protocols
     src/protocols/serial.cpp
     src/protocols/i2c.cpp
+    src/protocols/can.cpp
 )
 
 target_include_directories(${PROJECT_NAME}

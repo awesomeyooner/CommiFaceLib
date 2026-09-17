@@ -23,7 +23,7 @@
  * 
  * To use this, mainly just implement 
  * 
- * ```c++
+ * ```
  * status_utils::StatusCode transmit_bytes(const std::vector<uint8_t>& bytes) override;
  * 
  * status_utils::StatusedValue<std::vector<uint8_t>> receive_bytes(int num_bytes, int timeout_ms = -1) override;
